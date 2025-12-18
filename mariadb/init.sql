@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS cv;
+
+USE cv;
+
+CREATE TABLE IF NOT EXISTS counter (
+    id INT PRIMARY KEY,
+    views INT
+);
+
+INSERT IGNORE INTO counter (id, views)
+VALUES (1, 0);

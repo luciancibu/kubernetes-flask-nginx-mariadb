@@ -1,0 +1,22 @@
+services:
+  mariadb:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: cv
+      MARIADB_USER: cvuser
+      MARIADB_PASSWORD: cvpass
+      MARIADB_ROOT_PASSWORD: rootpass
+    volumes:
+      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  flask:
+    build: ./flask
+    depends_on:
+      - mariadb
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - flask
