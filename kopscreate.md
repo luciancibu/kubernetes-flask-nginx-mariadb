@@ -1,4 +1,21 @@
-### Install docker ###
+### Commands: ###
+docker login
+
+docker build -t luciancibu/flask-counter:1.0 .
+docker tag luciancibu/flask-counter:1.0 luciancibu/flask-counter:latest
+docker push luciancibu/flask-counter:1.0
+docker push luciancibu/flask-counter:latest
+
+docker build -t luciancibu/nginx-resume:1.0 .
+docker tag luciancibu/nginx-resume:1.0 luciancibu/nginx-resume:latest
+docker push luciancibu/nginx-resume:1.0
+docker push luciancibu/nginx-resume:latest
+
+
+kubectl rollout restart deployment appnginx
+kubectl rollout restart deployment appflask
+
+### Install docker Linux ###
 
 # Add Docker's official GPG key:
 sudo apt update
@@ -37,23 +54,26 @@ sudo mv kops /usr/local/bin/kops
 Doc: https://kubernetes.github.io/ingress-nginx/deploy/#aws
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.1/deploy/static/provider/cloud/deploy.yaml
 
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.1/deploy/static/provider/cloud/deploy.yaml
+
+
 
 
 ### Create Cluster ###
-kops create cluster --name=kubevpro.kakosnita.xyz --state=s3://kopsstate0731910497 \
+kops create cluster --name=resume.kakosnita.xyz --state=s3://kopsstate0731910497 \
 --zones=us-east-1a,us-east-1b --node-count=2 --node-size=t3.small --control-plane-size=t3.medium \
---dns-zone=kubevpro.kakosnita.xyz --node-volume-size=12 --control-plane-volume-size=12 \
+--dns-zone=resume.kakosnita.xyz --node-volume-size=12 --control-plane-volume-size=12 \
 --ssh-public-key ~/.ssh/id_ed25519.pub
 
-kops update cluster --name=kubevpro.kakosnita.xyz --state=s3://kopsstate0731910497 --yes --admin
+kops update cluster --name=resume.kakosnita.xyz --state=s3://kopsstate0731910497 --yes --admin
 
 
 ### Validate: ###
-kops validate cluster --name=kubevpro.kakosnita.xyz --state=s3://kopsstate0731910497
+kops validate cluster --name=resume.kakosnita.xyz --state=s3://kopsstate0731910497
 
 
 ### Delete: ###
-kops delete cluster --name=kubevpro.kakosnita.xyz --state=s3://kopsstate0731910497 --yes
+kops delete cluster --name=resume.kakosnita.xyz --state=s3://kopsstate0731910497 --yes
 
 
 ### K8 Objects: ###
