@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: appflask
-        image: luciancibu/flask-counter:latest
+        image: luciancibu/flask-counter:1.0
         ports:
         - name: appflask-port
           containerPort: 5000

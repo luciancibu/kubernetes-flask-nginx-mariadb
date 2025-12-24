@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: appnginx
-        image: luciancibu/nginx-resume:latest
+        image: luciancibu/nginx-resume:1.0
         ports:
         - name: appnginx-port
           containerPort: 80
