@@ -41,8 +41,16 @@ jobs:
           
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.sources=app/flask
+            -Dsonar.python.version=3.11
+            -Dsonar.python.pylint.reportPaths=app/flask/pylint-report.txt
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
       - name: SonarCloud Quality Gate
         uses: SonarSource/sonarqube-quality-gate-action@v1
