@@ -20,8 +20,6 @@ spec:
         volumeMounts:
         - name: app-db-data
           mountPath: /var/lib/mysql # we have a folder /var/lib/mysql that will be connected with app-db-data (the pvc volume)
-        - name: init-sql
-          mountPath: /docker-entrypoint-initdb.d
         ports:
         - name: appdb-port
           containerPort: {{ .Values.service.mariadb.port }}
@@ -44,9 +42,6 @@ spec:
       - name: app-db-data
         persistentVolumeClaim:
           claimName: {{ .Values.name }}-pvc
-      - name: init-sql
-        configMap:
-          name: {{ .Values.name }}-configmap
       initContainers:
       - name: init-db
         image: busybox:latest

@@ -265,3 +265,24 @@ kubectl exec --stdin --tty <pod_name> --bin/bash   --> connect to a pod
 ### Secrets ###
 echo -n "secretpass" | base64                    -> encode base64
 echo -n "encoded_password" | base64 --decode     -> encode base64
+
+
+
+### For EKS ###
+
+aws eks update-kubeconfig \
+  --region <region> \
+  --name <eks_name>
+
+kubectl get endpoints flask-nginx-mariadb-nginx
+kubectl get endpoints flask-nginx-mariadb-flask
+kubectl logs deploy/flask-nginx-mariadb-nginx
+kubectl logs deploy/flask-nginx-mariadb-flask
+
+kubectl get pods | grep mariadb
+kubectl logs deploy/flask-nginx-mariadb-mariadb
+
+kubectl exec -it deploy/flask-nginx-mariadb-nginx -- sh
+curl -v http://flask-nginx-mariadb-flask:5000/view
+
+kubectl exec -it deploy/flask-nginx-mariadb-flask -- sh

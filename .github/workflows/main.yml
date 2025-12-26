@@ -46,11 +46,11 @@ jobs:
         run: docker compose down
         working-directory: app
 
-      - name: flake8 (style check)
+      - name: Style Check(flake8)
         run: flake8 .
         working-directory: app/flask
 
-      - name: pylint (static analysis report)
+      - name: Static Analysis Report(pylint)
         run: |
           pylint app.py --output-format=parseable > pylint-report.txt || true
           echo "===== PYLINT REPORT ====="
