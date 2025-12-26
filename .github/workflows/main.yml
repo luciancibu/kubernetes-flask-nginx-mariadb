@@ -3,8 +3,6 @@ name: App deploy
 on:
   push:
     branches: [ main ]
-    paths:
-      - app/flask/**
   workflow_dispatch:
 env:
   AWS_REGION: us-east-2
@@ -115,6 +113,9 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4    
 
+      - name: Set image tag
+        run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -135,6 +136,6 @@ jobs:
           chart-path: helm-chart
           namespace: default
           name: flask-nginx-mariadb
-          values: image.flask.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO_FLASK }},image.flask.tag=${{ github.sha }},image.nginx.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO_NGINX }},image.nginx.tag=${{ github.sha }}
+          values: image.flask.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO_FLASK }},image.flask.tag=${{ env.TAG }},image.nginx.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO_NGINX }},image.nginx.tag=${{ env.TAG }}
 
 
