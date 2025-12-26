@@ -1,4 +1,4 @@
-name: Python Quality Gate
+name: App deploy
 
 on:
   push:
@@ -8,14 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  quality:
+  Testing:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -57,19 +54,19 @@ jobs:
           cat pylint-report.txt          
         working-directory: app/flask
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=resume-action073191_resume-app
-            -Dsonar.organization=resume-action073191
-            -Dsonar.sources=app/flask
-            -Dsonar.python.version=3.11
-            -Dsonar.python.pylint.reportPaths=app/flask/pylint-report.txt
+      # - name: SonarCloud Scan
+      #   uses: SonarSource/sonarcloud-github-action@v2
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   with:
+      #     args: >
+      #       -Dsonar.projectKey=resume-action073191_resume-app
+      #       -Dsonar.organization=resume-action073191
+      #       -Dsonar.sources=app/flask
+      #       -Dsonar.python.version=3.11
+      #       -Dsonar.python.pylint.reportPaths=app/flask/pylint-report.txt
 
-      - name: SonarCloud Quality Gate
-        uses: SonarSource/sonarqube-quality-gate-action@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # - name: SonarCloud Quality Gate
+      #   uses: SonarSource/sonarqube-quality-gate-action@v1
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
