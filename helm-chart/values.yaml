@@ -23,7 +23,6 @@ mariadb:
   user: cvuser
   password: cvpass  # base64: Y3ZwYXNz
   storage: 3Gi
-  storageClassName: default
 
 ingress:
   enabled: true

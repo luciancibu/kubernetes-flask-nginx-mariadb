@@ -276,8 +276,12 @@ aws eks update-kubeconfig \
 
 kubectl get endpoints flask-nginx-mariadb-nginx
 kubectl get endpoints flask-nginx-mariadb-flask
+kubectl get endpoints flask-nginx-mariadb-mariadb
+
 kubectl logs deploy/flask-nginx-mariadb-nginx
 kubectl logs deploy/flask-nginx-mariadb-flask
+kubectl logs deploy/flask-nginx-mariadb-mariadb
+
 
 kubectl get pods | grep mariadb
 kubectl logs deploy/flask-nginx-mariadb-mariadb
